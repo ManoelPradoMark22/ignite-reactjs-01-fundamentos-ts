@@ -1,0 +1,16 @@
+quanto queremos informar para o TS que uma prop vai sempre existir, colocamos o !
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+
+acima, ele acusa erro, informando que o parametro pode nao existir
+
+colocando o ! , ele para de acusar o erro!
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
