@@ -8,6 +8,8 @@ import './global.css';
 
 import { posts } from './support/data/posts';
 
+const postsArray = posts();
+
 export function App() {
 
   return (
@@ -17,13 +19,11 @@ export function App() {
       <div className={styles.wrapper}>
         <Sidebar/>
         <main>
-          {posts().map(post => {
+          {postsArray.map(post => {
             return (
               <Post
                 key={post.id}
-                author={post.author}
-                content={post.content}
-                publishedAt={post.publishedAt}
+                post={post}
               />
             )
           })}

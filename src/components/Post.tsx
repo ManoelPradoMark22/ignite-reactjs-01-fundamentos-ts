@@ -7,21 +7,10 @@ import styles from './Post.module.css';
 
 import { dates } from '../support/util/dates';
 
-interface Author {
-  name: string;
-  role: string;
-  avatarUrl: string;
-}
+import { PostProps } from '../support/data/posts';
 
-interface Content {
-  type: 'paragraph' | 'link',
-  content: string
-}
-
-interface PostProps {
-  author: Author;
-  publishedAt: Date;
-  content: Content[];
+interface PostType {
+  post: PostProps
 }
 
 interface CommentProps { 
@@ -29,7 +18,9 @@ interface CommentProps {
   date: Date;
 }
 
-export function Post({ author, publishedAt, content }: PostProps) {
+export function Post({ post }: PostType) {
+
+  const { author, publishedAt, content } = post;
 
   const [comments, setComments] = useState<CommentProps[]>([
     {
