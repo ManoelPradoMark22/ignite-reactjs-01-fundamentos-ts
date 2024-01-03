@@ -1,4 +1,22 @@
-export function posts() {
+interface Author {
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
+
+interface Content {
+  type: 'paragraph' | 'link',
+  content: string
+}
+
+interface PostProps {
+  id: number;
+  author: Author;
+  publishedAt: Date;
+  content: Content[];
+}
+
+export function posts():PostProps[] {
   return [
     {
       id: 1,

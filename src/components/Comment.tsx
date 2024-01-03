@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import styles from './Comment.module.css'
 import { Trash } from '@phosphor-icons/react';
 import { HandsClapping } from '@phosphor-icons/react';
@@ -8,7 +6,12 @@ import { Avatar } from './Avatar';
 import { dates } from '../support/util/dates';
 import { useState } from 'react';
 
-export function Comment({ content, date, onDeleteComment }) {
+interface CommentProps {
+  content: string;
+  date: Date;
+  onDeleteComment: (comment: Date) => void;
+}
+export function Comment({ content, date, onDeleteComment }: CommentProps) {
   const [likeCount, setLikeCount] = useState(0);
 
   function handleDeleComment() {
@@ -66,10 +69,4 @@ export function Comment({ content, date, onDeleteComment }) {
       </div>
     </div>
   )
-}
-
-Comment.propTypes = {
-  content: PropTypes.string,
-  date: PropTypes.instanceOf(Date),
-  onDeleteComment: PropTypes.func
 }

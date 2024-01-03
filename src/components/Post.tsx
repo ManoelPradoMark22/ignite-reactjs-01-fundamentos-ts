@@ -1,21 +1,43 @@
-import PropTypes from 'prop-types';
-
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 
 import styles from './Post.module.css';
 
-import { dates } from '../support/util/dates.js';
+import { dates } from '../support/util/dates';
 
-export function Post({ author, publishedAt, content }) {
-  const [comments, setComments] = useState([
+interface Author {
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
+
+interface Content {
+  type: 'paragraph' | 'link',
+  content: string
+}
+
+interface PostProps {
+  author: Author;
+  publishedAt: Date;
+  content: Content[];
+}
+
+interface CommentProps { 
+  content: string;
+  date: Date;
+}
+
+export function Post({ author, publishedAt, content }: PostProps) {
+
+  const [comments, setComments] = useState<CommentProps[]>([
     {
       content: 'Maravilha!!',
       date: new Date('2023-12-28 00:20')
     }
   ]);
+  
   const [newCommentText, setNewCommentText] = useState('');
 
   const {
@@ -24,7 +46,7 @@ export function Post({ author, publishedAt, content }) {
     dateTime
   } = dates(publishedAt);
 
-  function handleCreateNewComment(event) {    
+  function handleCreateNewComment(event: FormEvent) {    
     event.preventDefault();
 
     const newObjectComment = {
@@ -38,16 +60,16 @@ export function Post({ author, publishedAt, content }) {
     setNewCommentText('');
   }
 
-  function handleNewCommentChange(event) {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('');
     setNewCommentText(event.target.value)
   }
  
-  function handleNewCommentInvalid(event){
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>){
     event.target.setCustomValidity("Esse campo é obrigatório!")
   }
 
-  function deleteComment(dateCommentToDelete) {
+  function deleteComment(dateCommentToDelete: Date) {
     const commentsWithoutDeletedOne = comments.filter(comment => comment.date !== dateCommentToDelete);
 
     setComments(commentsWithoutDeletedOne);
@@ -103,7 +125,7 @@ export function Post({ author, publishedAt, content }) {
         {comments.map(comment => {
           return (
             <Comment 
-              key={comment.date}
+              key={comment.date.toISOString()}
               content={comment.content}
               date={comment.date}
               onDeleteComment={deleteComment}
@@ -113,15 +135,5 @@ export function Post({ author, publishedAt, content }) {
       </div>
     </article>
   )
-}
-
-Post.propTypes = {
-  author: PropTypes.shape({
-    avatarUrl: PropTypes.string,
-    name: PropTypes.string,
-    role: PropTypes.string,
-  }),
-  content: PropTypes.array,
-  publishedAt: PropTypes.instanceOf(Date),
 }
 
