@@ -1,4 +1,4 @@
-# IgniteTimer⏰
+# IgniteFeed
 
  - [Clique aqui](https://manoelpradomark22.github.io/ignite-reactjs-01-fundamentos-ts/) para acessar a aplicação através do Github Pages;
 
